@@ -19,6 +19,10 @@ class WordRepository(private val wordDao: WordDao) {
         return wordDao.loadWord(id)
     }
 
+    suspend fun updateWord(word: WordEntity) {
+        return wordDao.updateWord(word)
+    }
+
 
 
 }

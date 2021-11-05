@@ -5,12 +5,14 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import com.aadarshkt.eloquence.ui.home.recyclerview.WordAdapter
 import com.aadarshkt.eloquence.ui.home.recyclerview.WordItemListener
 import com.aadarshkt.eloquence.databinding.ActivityMainBinding
 import com.aadarshkt.eloquence.datasource.WordApplication
+import com.aadarshkt.eloquence.datasource.WordEntity
 import com.aadarshkt.eloquence.models.Word
 import com.aadarshkt.eloquence.ui.update.UpdateActivity
 
@@ -24,6 +26,7 @@ class MainActivity : AppCompatActivity(), WordItemListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
@@ -41,14 +44,14 @@ class MainActivity : AppCompatActivity(), WordItemListener {
     }
 
     private fun handleIntent(intent: Intent?) {
-        when(intent?.action) {
+        when (intent?.action) {
             Intent.ACTION_VIEW -> Toast.makeText(this, "View", Toast.LENGTH_SHORT).show()
             Intent.ACTION_MAIN -> Toast.makeText(this, "Main", Toast.LENGTH_SHORT).show()
             Intent.ACTION_CREATE_DOCUMENT -> handleWord(intent)
         }
     }
 
-    private fun handleWord(intent: Intent?){
+    private fun handleWord(intent: Intent?) {
 
         val intentData = intent?.data
         val word = intentData?.getQueryParameter("name") ?: run {
@@ -68,8 +71,8 @@ class MainActivity : AppCompatActivity(), WordItemListener {
             return
         }
 
-        //insert to RoomDatabase
-        mainViewModel.insert(Word(word, sentence))
+        //insert to RoomDatabase //Using WordEntity for predefined value of id.
+        mainViewModel.insert(WordEntity(word, sentence))
     }
 
     companion object {
@@ -86,6 +89,7 @@ class MainActivity : AppCompatActivity(), WordItemListener {
         val intent = Intent(this, UpdateActivity::class.java)
             .putExtra("id", id)
         startActivity(intent)
+        finish()
     }
 }
 

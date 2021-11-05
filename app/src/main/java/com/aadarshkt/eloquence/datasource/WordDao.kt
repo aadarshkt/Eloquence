@@ -17,6 +17,9 @@ interface WordDao {
     @Query("SELECT * FROM word_table WHERE id = :id")
     suspend fun loadWord(id: Long) : WordEntity
 
+    @Update
+    suspend fun updateWord(word: WordEntity)
+
     @Delete
     suspend fun deleteWord(word: WordEntity)
 

@@ -9,10 +9,23 @@ import kotlinx.coroutines.launch
 
 class MainViewModel(private val repository: WordRepository) : ViewModel() {
 
-    //insert data to the database
-    fun insert(word: Word) = viewModelScope.launch(Dispatchers.IO) {
-        val wordEntity = word.toWordEntity()
-        repository.insert(wordEntity)
+    //insert (create) data to the database
+    fun insert(word: WordEntity) = viewModelScope.launch(Dispatchers.IO) {
+        repository.insert(word)
+    }
+
+    //Read Data from the database.
+    private var _word = MutableLiveData<Word>()
+    var word : LiveData<Word> = _word
+
+    suspend fun loadWord(id : Long) : LiveData<Word>{
+        _word.value  = repository.loadWord(id).toWord()
+        return word
+    }
+
+    //update word
+    fun updateWord(word: Word) = viewModelScope.launch(Dispatchers.IO) {
+        repository.updateWord(word.toWordEntity())
     }
 
     //delete Data
