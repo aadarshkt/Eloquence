@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "92018727872",
+    "project_id": "eloquence-dbac3",
+    "storage_bucket": "eloquence-dbac3.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:92018727872:android:cca1d27804c6d6c9114625",
+        "android_client_info": {
+          "package_name": "com.example.eloquence"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "92018727872-6hg7fg0g0vqb02psj747lesbcr16obcb.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAQUCYU7NFB6Hg1w6_nwvyK_fM6AjLWQDc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "92018727872-6hg7fg0g0vqb02psj747lesbcr16obcb.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

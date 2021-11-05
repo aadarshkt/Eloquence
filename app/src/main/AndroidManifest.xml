@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?><manifest xmlns:android="http://schemas.android.com/apk/res/android"
+xmlns:tools="http://schemas.android.com/tools"
+package="com.aadarshkt.eloquence">
+
+<application
+    android:name=".datasource.WordApplication"
+    android:allowBackup="true"
+    android:fullBackupOnly="true"
+    android:icon="@mipmap/ic_launcher"
+    android:label="@string/app_name"
+    android:roundIcon="@mipmap/ic_launcher_round"
+    android:supportsRtl="true"
+    android:theme="@style/Theme.Eloquence">
+    <activity
+        android:name="com.aadarshkt.eloquence.ui.update.UpdateActivity"
+        android:exported="false" />
+    <activity
+        android:name=".ui.home.MainActivity"
+        android:exported="true">
+        <intent-filter>
+            <action android:name="android.intent.action.MAIN" />
+
+            <category android:name="android.intent.category.LAUNCHER" />
+        </intent-filter>
+
+        <!-- App Actions For Google Assistant -->
+        <intent-filter android:autoVerify="true">
+            <action android:name="android.intent.action.CREATE_DOCUMENT" />
+
+            <category android:name="android.intent.category.DEFAULT"/>
+            <category android:name="android.intent.category.BROWSABLE"/>
+            <data
+                android:host="www.aadarshkt.com"
+                android:scheme="https" />
+        </intent-filter>
+
+        <!-- For App Actions Google Assistant using shortcuts.xml -->
+        <meta-data
+            android:name="android.app.shortcuts"
+            android:resource="@xml/shortcuts" />
+    </activity>
+</application>
+</manifest>

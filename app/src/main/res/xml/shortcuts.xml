@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shortcuts xmlns:android="http://schemas.android.com/apk/res/android">
+    <capability android:name="actions.intent.CREATE_DIGITAL_DOCUMENT">
+
+        <!-- fulfillment tags for the fulfillment of the capability -->
+        <intent
+            android:action="android.intent.action.CREATE_DOCUMENT">
+
+            <url-template android:value="https://www.aadarshkt.com/{?name,articleBody}" />
+
+            <!--different mappings like digitalDocument.name to name in the url -->
+            <parameter
+                android:name="digitalDocument.articleBody"
+                android:key="articleBody" />
+            <parameter
+                android:name="digitalDocument.name"
+                android:key="name"
+                required="true" />
+        </intent>
+
+
+        <!-- fallback intent -->
+        <intent
+            android:action="android.intent.action.CREATE_DOCUMENT">
+        </intent>
+    </capability>
+
+</shortcuts>
