@@ -7,13 +7,17 @@
         <entry key="..\:/Users/Dell/AndroidStudioProjects/Eloquence/app/src/main/res/drawable/ic_arrow_left.xml" value="0.12604166666666666" />
         <entry key="..\:/Users/Dell/AndroidStudioProjects/Eloquence/app/src/main/res/drawable/ic_baseline_delete_24.xml" value="0.2203125" />
         <entry key="..\:/Users/Dell/AndroidStudioProjects/Eloquence/app/src/main/res/drawable/ic_baseline_delete_48.xml" value="0.16822916666666668" />
+        <entry key="..\:/Users/Dell/AndroidStudioProjects/Eloquence/app/src/main/res/drawable/ic_hamburger_menu.xml" value="0.19537037037037036" />
+        <entry key="..\:/Users/Dell/AndroidStudioProjects/Eloquence/app/src/main/res/drawable/ic_more.xml" value="0.12604166666666666" />
         <entry key="..\:/Users/Dell/AndroidStudioProjects/Eloquence/app/src/main/res/drawable/ic_more_vertical.xml" value="0.17592592592592593" />
         <entry key="..\:/Users/Dell/AndroidStudioProjects/Eloquence/app/src/main/res/drawable/ic_search.xml" value="0.19907407407407407" />
-        <entry key="..\:/Users/Dell/AndroidStudioProjects/Eloquence/app/src/main/res/layout/activity_main.xml" value="0.208803611738149" />
-        <entry key="..\:/Users/Dell/AndroidStudioProjects/Eloquence/app/src/main/res/layout/activity_search.xml" value="0.20416666666666666" />
+        <entry key="..\:/Users/Dell/AndroidStudioProjects/Eloquence/app/src/main/res/layout-v26/activity_search.xml" value="0.20416666666666666" />
+        <entry key="..\:/Users/Dell/AndroidStudioProjects/Eloquence/app/src/main/res/layout/activity_main.xml" value="0.33" />
+        <entry key="..\:/Users/Dell/AndroidStudioProjects/Eloquence/app/src/main/res/layout/activity_search.xml" value="0.637410071942446" />
         <entry key="..\:/Users/Dell/AndroidStudioProjects/Eloquence/app/src/main/res/layout/activity_update.xml" value="0.25" />
         <entry key="..\:/Users/Dell/AndroidStudioProjects/Eloquence/app/src/main/res/layout/fragment_home.xml" value="0.18297101449275363" />
         <entry key="..\:/Users/Dell/AndroidStudioProjects/Eloquence/app/src/main/res/layout/fragment_update.xml" value="0.14322916666666666" />
+        <entry key="..\:/Users/Dell/AndroidStudioProjects/Eloquence/app/src/main/res/layout/search_item.xml" value="0.2006340579710145" />
         <entry key="..\:/Users/Dell/AndroidStudioProjects/Eloquence/app/src/main/res/layout/word_item.xml" value="0.23182297154899895" />
         <entry key="..\:/Users/Dell/AndroidStudioProjects/Eloquence/app/src/main/res/layout/word_widget.xml" value="0.19791666666666666" />
         <entry key="..\:/Users/Dell/AndroidStudioProjects/Eloquence/app/src/main/res/menu/popup_menu.xml" value="0.20416666666666666" />

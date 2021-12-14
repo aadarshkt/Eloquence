@@ -1,4 +1,4 @@
-package com.aadarshkt.eloquence.ui.home.recyclerview
+package com.aadarshkt.eloquence.ui.home.homerecyclerview
 
 import android.view.LayoutInflater
 import android.view.ViewGroup

@@ -1,19 +1,14 @@
 package com.aadarshkt.eloquence.ui.home
 
-import android.app.SearchManager
-import android.content.Context
+import android.app.ActivityOptions
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
-import android.view.Menu
-import android.view.MenuInflater
-import android.view.MenuItem
-import android.view.View
+import android.view.*
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.PopupMenu
-import androidx.appcompat.widget.SearchView
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.coroutineScope
 import androidx.lifecycle.repeatOnLifecycle
@@ -22,9 +17,11 @@ import com.aadarshkt.eloquence.R
 import com.aadarshkt.eloquence.databinding.ActivityMainBinding
 import com.aadarshkt.eloquence.datasource.WordApplication
 import com.aadarshkt.eloquence.datasource.WordEntity
-import com.aadarshkt.eloquence.ui.home.recyclerview.WordAdapter
-import com.aadarshkt.eloquence.ui.home.recyclerview.WordItemListener
+import com.aadarshkt.eloquence.ui.home.homerecyclerview.WordAdapter
+import com.aadarshkt.eloquence.ui.home.homerecyclerview.WordItemListener
+import com.aadarshkt.eloquence.ui.search.SearchActivity
 import com.aadarshkt.eloquence.ui.update.UpdateActivity
+import com.google.android.material.transition.platform.MaterialContainerTransformSharedElementCallback
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
@@ -37,6 +34,12 @@ class MainActivity : AppCompatActivity(), WordItemListener {
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
+
+        //search_transition
+        window.requestFeature(Window.FEATURE_ACTIVITY_TRANSITIONS)
+        setExitSharedElementCallback(MaterialContainerTransformSharedElementCallback())
+        window.sharedElementsUseOverlay = false
+
         super.onCreate(savedInstanceState)
 
         binding = ActivityMainBinding.inflate(layoutInflater)
@@ -45,6 +48,15 @@ class MainActivity : AppCompatActivity(), WordItemListener {
         //Todo add overflow menu for troubleshooting us-en-locale.
         //TODO replace pop menu with context menu.
 
+        binding.searchIcon.setOnClickListener {
+            val intent = Intent(this, SearchActivity::class.java)
+            val options = ActivityOptions.makeSceneTransitionAnimation(
+                this,
+                findViewById(R.id.top_app_bar_layout),
+                "search_transition" // The transition name to be matched in Activity B.
+            )
+            startActivity(intent, options.toBundle())
+        }
 
         val adapter = WordAdapter(this)
         binding.wordItemRecycler.apply {
@@ -66,33 +78,6 @@ class MainActivity : AppCompatActivity(), WordItemListener {
         }
     }
 
-    //Options menu.
-    override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        val inflater: MenuInflater = menuInflater
-        inflater.inflate(R.menu.top_app_bar_menu, menu)
-
-        val searchManager = getSystemService(Context.SEARCH_SERVICE) as SearchManager
-        (menu.findItem(R.id.search_item).actionView as SearchView).apply {
-            setSearchableInfo(searchManager.getSearchableInfo(componentName))
-        }
-
-        return true
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-
-        return when (item.itemId) {
-            R.id.search_item -> {
-                Toast.makeText(this, "Search", Toast.LENGTH_SHORT).show()
-
-                true
-            }
-            else -> {
-                Toast.makeText(this, "godifg", Toast.LENGTH_SHORT).show()
-                super.onOptionsItemSelected(item)
-            }
-        }
-    }
 
     private fun handleIntent(intent: Intent?) {
         when (intent?.action) {

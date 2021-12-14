@@ -6,13 +6,16 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:transitionName="search_transition"
         tools:context=".ui.search.SearchActivity">
 
         <com.google.android.material.appbar.AppBarLayout
             android:id="@+id/search_app_bar_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:elevation="0dp"
+            android:background="@color/material_on_background_disabled"
+            android:padding="8dp"
+            app:elevation="0dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
@@ -22,31 +25,46 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
 
-                <ImageButton
+                <ImageView
                     android:id="@+id/back_button"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:padding="4dp"
                     android:background="@color/white"
                     android:contentDescription="@string/back"
                     android:src="@drawable/ic_arrow_left" />
 
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/text_input_layout"
+                <EditText
+                    android:id="@+id/search_edit_text"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="48dp"
+                    android:layout_marginStart="4dp"
+                    android:autofillHints="false"
+                    android:hint="@string/search"
+                    android:imeOptions="actionSearch"
+                    android:inputType="text"
+                    android:maxLines="1">
 
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/search_edit_text"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:inputType="text"
-                        android:maxLines="1" />
-
-                </com.google.android.material.textfield.TextInputLayout>
+                    <requestFocus />
+                </EditText>
 
             </LinearLayout>
 
         </com.google.android.material.appbar.AppBarLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/search_item_recycler"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:clipToPadding="false"
+            android:padding="8dp"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/search_app_bar_layout"
+            tools:listitem="@layout/word_item" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

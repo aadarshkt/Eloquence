@@ -13,21 +13,48 @@
             android:id="@+id/top_app_bar_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:elevation="0dp"
+            android:transitionName="search_transition"
+            app:elevation="0dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
-            <androidx.appcompat.widget.Toolbar
-                android:id="@+id/top_app_bar"
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="?attr/actionBarSize"
-                android:background="@color/white"
-                android:elevation="0dp"
-                app:menu="@menu/top_app_bar_menu"
-                app:title="Eloquence"
-                app:titleTextAppearance="?attr/textAppearanceHeadline6"
-                app:titleTextColor="@color/black" />
+                android:layout_height="wrap_content"
+                android:background="@color/white">
+
+                <ImageView
+                    android:id="@+id/hamburger_menu"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="12dp"
+                    android:contentDescription="@string/menu"
+                    android:padding="12dp"
+                    android:src="@drawable/ic_more" />
+
+                <TextView
+                    android:id="@+id/title_app"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/greatevibes_regular"
+                    android:text="@string/eloquence"
+                    android:textAlignment="center"
+                    android:textColor="@color/black"
+                    android:textSize="40sp" />
+
+                <ImageView
+                    android:id="@+id/search_icon"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:contentDescription="@string/search"
+                    android:padding="12dp"
+                    android:src="@drawable/ic_search" />
+
+            </LinearLayout>
         </com.google.android.material.appbar.AppBarLayout>
 
         <androidx.recyclerview.widget.RecyclerView
