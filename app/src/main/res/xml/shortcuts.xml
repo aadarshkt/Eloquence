@@ -1,28 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
-<shortcuts xmlns:android="http://schemas.android.com/apk/res/android">
-    <capability android:name="actions.intent.CREATE_DIGITAL_DOCUMENT">
+<shortcuts xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <capability
+        android:name="custom.actions.intent.CREATE_WORD"
+        app:queryPatterns="@array/WordQueries">
 
         <!-- fulfillment tags for the fulfillment of the capability -->
-        <intent
-            android:action="android.intent.action.CREATE_DOCUMENT">
+        <intent android:action="android.intent.action.CREATE_DOCUMENT">
 
-            <url-template android:value="https://www.aadarshkt.com/{?name,articleBody}" />
+
+            <url-template android:value="https://www.aadarshkt.com/{?word,meaning}" />
 
             <!--different mappings like digitalDocument.name to name in the url -->
             <parameter
-                android:name="digitalDocument.articleBody"
-                android:key="articleBody" />
+                android:name="word"
+                required="true"
+                android:key="word"
+                android:mimeType="https://schema.org/Text" />
             <parameter
-                android:name="digitalDocument.name"
-                android:key="name"
-                required="true" />
+                android:name="meaning"
+                android:key="meaning"
+                android:mimeType="https://schema.org/Text" />
         </intent>
-
 
         <!-- fallback intent -->
         <intent
-            android:action="android.intent.action.CREATE_DOCUMENT">
-        </intent>
-    </capability>
+            android:action="android.intent.action.VIEW"
+            android:targetClass="com.aadarshkt.eloquence.ui.home.MainActivity"
+            android:targetPackage="com.aadarshkt.eloquence" />
 
+    </capability>
 </shortcuts>

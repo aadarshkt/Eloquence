@@ -9,4 +9,20 @@
     <string name="save">Save</string>
     <string name="word">Word</string>
     <string name="sentence">Sentence</string>
+    <string name="update">Update</string>
+    <string name="appwidget_text">EXAMPLE</string>
+    <string name="add_widget">Add widget</string>
+    <string name="app_widget_description">This is an app widget description</string>
+    <string name="more">more</string>
+    <string name="delete">Delete</string>
+    <string name="back">back</string>
+    <string name="about">About</string>
+    <string name="how_to_use">How to use</string>
+
+    <!-- Custom queries for app actions -->
+
+    <string-array name="WordQueries">
+        <item>save $word with meaning $meaning</item>
+        <item>save a word named $word with meaning $meaning</item>
+    </string-array>
 </resources>

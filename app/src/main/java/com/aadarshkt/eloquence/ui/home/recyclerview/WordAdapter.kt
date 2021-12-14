@@ -1,16 +1,11 @@
 package com.aadarshkt.eloquence.ui.home.recyclerview
 
-import android.content.Intent
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.activity.result.contract.ActivityResultContracts
-import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import com.aadarshkt.eloquence.databinding.WordItemBinding
 import com.aadarshkt.eloquence.models.Word
-import com.aadarshkt.eloquence.ui.update.UpdateActivity
 
 class WordAdapter(
     private val listener: WordItemListener

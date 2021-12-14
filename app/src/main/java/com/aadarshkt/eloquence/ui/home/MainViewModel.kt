@@ -1,48 +1,57 @@
 package com.aadarshkt.eloquence.ui.home
 
-import androidx.lifecycle.*
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.aadarshkt.eloquence.datasource.WordEntity
 import com.aadarshkt.eloquence.datasource.WordRepository
 import com.aadarshkt.eloquence.models.Word
-import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 
 class MainViewModel(private val repository: WordRepository) : ViewModel() {
 
-    //insert (create) data to the database
-    fun insert(word: WordEntity) = viewModelScope.launch(Dispatchers.IO) {
-        repository.insert(word)
-    }
-
-    //Read Data from the database.
-    private var _word = MutableLiveData<Word>()
-    var word : LiveData<Word> = _word
-
-    suspend fun loadWord(id : Long) : LiveData<Word>{
-        _word.value  = repository.loadWord(id).toWord()
-        return word
+    //get data from database using Flow and convert it from WordEntity data type to Word dataType
+    //no need of suspend function.
+    fun getAll(): Flow<List<Word>> = repository.getAll().map { wordEntityList ->
+        wordEntityList.map {
+            it.toWord()
+        }
     }
 
     //update word
-    fun updateWord(word: Word) = viewModelScope.launch(Dispatchers.IO) {
+    fun updateWord(word: Word) = viewModelScope.launch {
         repository.updateWord(word.toWordEntity())
     }
 
     //delete Data
-    fun deleteWord(word : Word) = viewModelScope.launch(Dispatchers.IO) {
-        val wordEntity  = word.toWordEntity()
-        repository.delete(wordEntity)
+    fun deleteWord(id: Long) = viewModelScope.launch {
+        repository.delete(id)
     }
 
-    //get data from database using Flow and convert it from WordEntity data type to Word dataType
-    private val _allWords : LiveData<List<Word>> = Transformations.map(repository.allWords.asLiveData()) { wordEntity ->
-        wordEntity.map {
-            it.toWord()
+    //insert (create) data to the database
+    fun insert(word: WordEntity) = viewModelScope.launch {
+        repository.insert(word)
+    }
+
+    //Read Data from the database.
+    private val _word = MutableLiveData<Word>()
+    val word: LiveData<Word> = _word
+
+    suspend fun loadWord(id: Long): LiveData<Word> {
+        _word.value = repository.loadWord(id).toWord()
+        return word
+    }
+
+    //search results of word
+    fun getSearchWord(name: String): Flow<List<Word>> =
+        repository.getSearchWord(name).map { searchListWordEntity ->
+            searchListWordEntity.map {
+                it.toWord()
+            }
         }
-    }
-    val allWords : LiveData<List<Word>>
-        get() = _allWords
-
 
 
     //extension functions.
@@ -58,3 +67,5 @@ class MainViewModel(private val repository: WordRepository) : ViewModel() {
         sentence = sentence
     )
 }
+
+

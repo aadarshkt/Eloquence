@@ -1,6 +1,8 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
     <style name="Theme.Eloquence" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+
+
         <!-- Primary brand color. -->
         <item name="colorPrimary">@color/purple_500</item>
         <item name="colorPrimaryVariant">@color/purple_700</item>
@@ -14,4 +16,12 @@
         <item name="android:windowLightStatusBar">?attr/colorSecondary</item>
         <!-- Customize your theme here. -->
     </style>
+
+    <style name="Theme.Eloquence.AppWidgetContainerParent" parent="@android:style/Theme.DeviceDefault">
+        <item name="appWidgetRadius">8dp</item>
+        <item name="appWidgetPadding">4dp</item>
+        <item name="appWidgetInnerRadius">4dp</item>
+    </style>
+
+    <style name="Theme.Eloquence.AppWidgetContainer" parent="Theme.Eloquence.AppWidgetContainerParent" />
 </resources>
