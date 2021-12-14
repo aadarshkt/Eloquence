@@ -10,7 +10,7 @@
 
         <variable
             name="listener"
-            type="com.aadarshkt.eloquence.ui.home.recyclerview.WordItemListener" />
+            type="com.aadarshkt.eloquence.ui.home.homerecyclerview.WordItemListener" />
     </data>
 
     <FrameLayout

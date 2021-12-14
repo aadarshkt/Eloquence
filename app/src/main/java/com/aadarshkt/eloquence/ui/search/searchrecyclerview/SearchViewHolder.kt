@@ -1,20 +1,14 @@
-package com.aadarshkt.eloquence.ui.home.recyclerview
+package com.aadarshkt.eloquence.ui.search.searchrecyclerview
 
 import androidx.recyclerview.widget.RecyclerView
 import com.aadarshkt.eloquence.databinding.WordItemBinding
 import com.aadarshkt.eloquence.models.Word
 
-class WordViewHolder(
+class SearchViewHolder(
     private var binding: WordItemBinding,
-    listener: WordItemListener
-) : RecyclerView.ViewHolder(binding.root)
-{
-    fun bind(word : Word) {
+) : RecyclerView.ViewHolder(binding.root) {
+    fun bind(word: Word) {
         binding.wordItem = word
         binding.executePendingBindings()
-    }
-
-    init {
-        binding.listener = listener
     }
 }

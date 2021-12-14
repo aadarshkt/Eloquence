@@ -18,6 +18,8 @@
     <string name="back">back</string>
     <string name="about">About</string>
     <string name="how_to_use">How to use</string>
+    <string name="eloquence">Eloquence</string>
+    <string name="menu">menu</string>
 
     <!-- Custom queries for app actions -->
 

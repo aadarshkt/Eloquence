@@ -23,7 +23,7 @@ interface WordDao {
     suspend fun deleteWord(id: Long)
 
     //search query
-    @Query("SELECT * FROM word_table WHERE name LIKE :name")
+    @Query("SELECT * FROM word_table WHERE word_table.name LIKE :name")
     fun getSearchWord(name: String): Flow<List<WordEntity>>
 
 
