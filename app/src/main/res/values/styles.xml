@@ -1,28 +1,32 @@
 <resources>
+    <style name="BaseAppTheme" parent="android:Theme.Material">
+        <!-- enable window content transitions -->
+        <item name="android:windowActivityTransitions">true</item>
 
-    <style name="Widget.Eloquence.AppWidget.Container" parent="android:Widget">
-        <item name="android:id">@android:id/background</item>
-        <item name="android:background">?android:attr/colorBackground</item>
+        <!-- specify enter and exit transitions -->
+        <item name="android:windowEnterTransition">@transition/explode</item>
+        <item name="android:windowExitTransition">@transition/explode</item>
+
+        <!-- specify shared element transitions -->
+        <item name="android:windowSharedElementEnterTransition">
+            @transition/change_image_transform</item>
+        <item name="android:windowSharedElementExitTransition">
+            @transition/change_image_transform</item>
+    </style>
+    <style name="eloquence_font_style_medium">
+        <item name="fontFamily">@font/breeserif_regular</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="android:textSize">20sp</item>
     </style>
 
-    <style name="Widget.Eloquence.AppWidget.InnerView" parent="android:Widget">
-        <item name="android:background">?android:attr/colorBackground</item>
-        <item name="android:textColor">?android:attr/textColorPrimary</item>
+    <style name="eloquence_font_style_small">
+        <item name="fontFamily">@font/breeserif_regular</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="android:textSize">18sp</item>
     </style>
-
-    <style name="AppWidgetSection" parent="@android:style/Widget">
-        <item name="android:padding">8dp</item>
-        <item name="android:layout_marginTop">12dp</item>
-        <item name="android:layout_marginLeft">12dp</item>
-        <item name="android:layout_marginRight">12dp</item>
-        <item name="android:background">@android:color/white</item>
-    </style>
-
-    <style name="AppWidgetText" parent="Base.TextAppearance.AppCompat.Subhead">
-        <item name="android:textColor">@android:color/black</item>
-    </style>
-
-    <style name="AppWidgetLabel" parent="AppWidgetText">
-        <item name="android:textStyle">bold</item>
+    <style name="eloquence_font_paragraph_small">
+        <item name="fontFamily">@font/sora_regular</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="android:textSize">15sp</item>
     </style>
 </resources>

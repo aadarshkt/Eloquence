@@ -2,7 +2,7 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/mainActivity">
+    app:startDestination="@id/glanceFragment">
 
     <activity
         android:id="@+id/mainActivity"
@@ -12,4 +12,25 @@
         android:id="@+id/updateActivity2"
         android:name="com.aadarshkt.eloquence.ui.update.UpdateActivity"
         android:label="UpdateActivity" />
+    <fragment
+        android:id="@+id/glanceFragment"
+        android:name="com.aadarshkt.eloquence.ui.home.glance.GlanceFragment"
+        android:label="@string/glance" />
+    <fragment
+        android:id="@+id/reviseFragment"
+        android:name="com.aadarshkt.eloquence.ui.home.revise.ReviseFragment"
+        android:label="ReviseFragment" />
+    <action
+        android:id="@+id/action_global_glanceFragment"
+        app:destination="@id/glanceFragment"
+        app:popUpTo="@id/glanceFragment"
+        app:popUpToInclusive="true" />
+    <action
+        android:id="@+id/action_global_reviseFragment"
+        app:destination="@id/reviseFragment"
+        app:popUpTo="@id/glanceFragment" />
+    <activity
+        android:id="@+id/createActivity"
+        android:name="com.aadarshkt.eloquence.ui.create.CreateActivity"
+        android:label="CreateActivity" />
 </navigation>

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <data>
+        <variable
+            name="listener"
+            type="com.aadarshkt.eloquence.ui.home.revise.reviserecyclerview.ReviseItemListener" />
+    </data>
+    <FrameLayout
+        android:id="@+id/card_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:onClick="@{(view) -> listener.flipCard(view)}">
+
+
+        <include
+            android:id="@+id/card_front"
+            layout="@layout/card_front"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center_vertical" />
+
+        <include
+            android:id="@+id/card_back"
+            layout="@layout/card_back"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center_vertical" />
+
+    </FrameLayout>
+</layout>

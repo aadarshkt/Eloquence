@@ -9,7 +9,7 @@ data class WordEntity(
 
     @PrimaryKey(autoGenerate = true) val id: Long,
     @ColumnInfo(name = "name") val name: String,
-    @ColumnInfo(name = "sentence") val sentence: String
+    @ColumnInfo(name = "meaning") val meaning: String
 ) {
     constructor(name: String, sentence: String) : this(0L, name, sentence)
 }

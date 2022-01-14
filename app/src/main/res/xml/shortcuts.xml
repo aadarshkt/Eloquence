@@ -30,4 +30,13 @@
             android:targetPackage="com.aadarshkt.eloquence" />
 
     </capability>
+
+    <capability android:name="actions.intent.GET_THING">
+        <intent
+            android:action="android.intent.action.VIEW"
+            android:targetClass="com.aadarshkt.eloquence.ui.search"
+            android:targetPackage="com.aadarshkt.eloquence">
+            <parameter android:name="thing.name" android:key="query" />
+        </intent>
+    </capability>
 </shortcuts>

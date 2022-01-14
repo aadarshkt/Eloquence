@@ -10,14 +10,15 @@
 
         <variable
             name="listener"
-            type="com.aadarshkt.eloquence.ui.home.homerecyclerview.WordItemListener" />
+            type="com.aadarshkt.eloquence.ui.home.glance.glancerecyclerview.WordItemListener" />
     </data>
 
     <FrameLayout
         android:id="@+id/word_item_holder_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:onLongClick="@{(view) -> listener.openPopupMenu(view, wordItem.id)}">
+        android:onClick="@{(view) -> listener.openPopupMenu(view, wordItem.id)}"
+        android:transitionName="update_transition">
 
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/card_view"
@@ -34,8 +35,6 @@
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="0dp"
-                    android:layout_marginEnd="0dp"
                     android:orientation="vertical">
 
                     <TextView
@@ -47,7 +46,8 @@
                         android:layout_marginEnd="16dp"
                         android:layout_marginBottom="4dp"
                         android:text="@{wordItem.name}"
-                        android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6" />
+                        android:fontFamily="@font/breeserif_regular"
+                        android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"/>
 
 
                     <TextView
@@ -58,13 +58,11 @@
                         android:layout_marginTop="4dp"
                         android:layout_marginEnd="16dp"
                         android:layout_marginBottom="8dp"
-                        android:text="@{wordItem.sentence}"
-                        android:textAppearance="?attr/textAppearanceBody2" />
+                        android:fontFamily="@font/zillaslab_light"
+                        android:text="@{wordItem.meaning}"
+                        android:textAppearance="?attr/textAppearanceBody2"/>
 
                 </LinearLayout>
-
-
-
         </com.google.android.material.card.MaterialCardView>
 
     </FrameLayout>

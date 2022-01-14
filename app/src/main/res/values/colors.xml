@@ -11,4 +11,7 @@
     <color name="light_blue_200">#FF81D4FA</color>
     <color name="light_blue_600">#FF039BE5</color>
     <color name="light_blue_900">#FF01579B</color>
+    <color name="fab_background_color">#FFF0F0F0</color>
+    <color name="card_border_color">#FFD4CBCB</color>
+    <color name="eloquence_light_grey">#FFF8F8F8</color>
 </resources>

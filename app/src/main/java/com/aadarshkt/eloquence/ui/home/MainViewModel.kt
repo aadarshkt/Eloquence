@@ -7,19 +7,34 @@ import androidx.lifecycle.viewModelScope
 import com.aadarshkt.eloquence.datasource.WordEntity
 import com.aadarshkt.eloquence.datasource.WordRepository
 import com.aadarshkt.eloquence.models.Word
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
+
 
 class MainViewModel(private val repository: WordRepository) : ViewModel() {
 
+
     //get data from database using Flow and convert it from WordEntity data type to Word dataType
     //no need of suspend function.
-    fun getAll(): Flow<List<Word>> = repository.getAll().map { wordEntityList ->
-        wordEntityList.map {
-            it.toWord()
+
+    private val _allWords: MutableStateFlow<List<Word>> = MutableStateFlow(emptyList())
+    val allWords: StateFlow<List<Word>> = _allWords
+
+    init {
+        viewModelScope.launch {
+            repository.getAll().collect { wordEntityList ->
+                _allWords.value = wordEntityList.map { wordEntity -> wordEntity.toWord() }
+            }
         }
     }
+
+//    fun getAll() : Flow<List<Word>> =
+//        repository.getAll().map { wordEntityList ->
+//            wordEntityList.map {
+//                it.toWord()
+//            }
+//        }
+
 
     //update word
     fun updateWord(word: Word) = viewModelScope.launch {
@@ -32,8 +47,8 @@ class MainViewModel(private val repository: WordRepository) : ViewModel() {
     }
 
     //insert (create) data to the database
-    fun insert(word: WordEntity) = viewModelScope.launch {
-        repository.insert(word)
+    fun insert(word: Word) = viewModelScope.launch {
+        repository.insert(word.toWordEntity())
     }
 
     //Read Data from the database.
@@ -58,13 +73,13 @@ class MainViewModel(private val repository: WordRepository) : ViewModel() {
     private fun Word.toWordEntity() = WordEntity(
         id = id,
         name = name,
-        sentence = sentence
+        meaning = meaning
     )
 
     private fun WordEntity.toWord() = Word(
         id = id,
         name = name,
-        sentence = sentence
+        meaning = meaning
     )
 }
 

@@ -1,31 +1,30 @@
 package com.aadarshkt.eloquence.ui.home
 
 import android.app.ActivityOptions
+import android.content.ActivityNotFoundException
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
-import android.util.Log
 import android.view.*
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.widget.PopupMenu
-import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.coroutineScope
-import androidx.lifecycle.repeatOnLifecycle
-import androidx.recyclerview.widget.DefaultItemAnimator
+import androidx.navigation.findNavController
+import androidx.navigation.ui.setupWithNavController
 import com.aadarshkt.eloquence.R
 import com.aadarshkt.eloquence.databinding.ActivityMainBinding
 import com.aadarshkt.eloquence.datasource.WordApplication
-import com.aadarshkt.eloquence.datasource.WordEntity
-import com.aadarshkt.eloquence.ui.home.homerecyclerview.WordAdapter
-import com.aadarshkt.eloquence.ui.home.homerecyclerview.WordItemListener
+import com.aadarshkt.eloquence.models.Word
+import com.aadarshkt.eloquence.ui.create.CreateActivity
+import com.aadarshkt.eloquence.ui.drawer.AboutActivity
+import com.aadarshkt.eloquence.ui.drawer.HowToUseActivity
+import com.aadarshkt.eloquence.ui.home.glance.GlanceFragmentDirections
+import com.aadarshkt.eloquence.ui.home.revise.ReviseFragmentDirections
 import com.aadarshkt.eloquence.ui.search.SearchActivity
-import com.aadarshkt.eloquence.ui.update.UpdateActivity
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.transition.platform.MaterialContainerTransformSharedElementCallback
-import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.launch
 
-class MainActivity : AppCompatActivity(), WordItemListener {
+class MainActivity : AppCompatActivity(){
 
     private lateinit var binding: ActivityMainBinding
 
@@ -45,8 +44,70 @@ class MainActivity : AppCompatActivity(), WordItemListener {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        //Todo add overflow menu for troubleshooting us-en-locale.
-        //TODO replace pop menu with context menu.
+        //navigation
+        val navController = findNavController(R.id.nav_host_fragment)
+        val navView: BottomNavigationView = binding.bottomNavigation
+        navView.setupWithNavController(navController)
+
+        navView.setOnItemSelectedListener { menuItem ->
+
+            when(menuItem.itemId) {
+                R.id.glance_fragment -> {
+                    val action = GlanceFragmentDirections.actionGlobalGlanceFragment()
+                    navController.navigate(action)
+                    true
+                }
+                R.id.revise_fragment -> {
+                    val action = ReviseFragmentDirections.actionGlobalReviseFragment()
+                    navController.navigate(action)
+                    true
+                }
+                else -> return@setOnItemSelectedListener true
+            }
+        }
+
+        //navigation drawer
+        binding.hamburgerMenu.setOnClickListener {
+            binding.drawerLayout.open()
+        }
+
+        binding.navigationView.setNavigationItemSelectedListener { menuItem ->
+
+            when(menuItem.itemId) {
+                R.id.about -> {
+                    val intent = Intent(this, AboutActivity::class.java)
+                    startActivity(intent)
+                    binding.drawerLayout.close()
+                }
+                R.id.how_to_use -> {
+                    val intent = Intent(this, HowToUseActivity::class.java)
+                    startActivity(intent)
+                    binding.drawerLayout.close()
+                }
+                R.id.contact_us -> {
+                    val intent = Intent(Intent.ACTION_SEND).apply {
+                        val myEmail = arrayOf("aadarshkt2001@gmail.com")
+                        val bodyText = """
+                            Device: ${Build.MODEL}
+                            OS Version: ${Build.VERSION.RELEASE}
+                        """.trimIndent()
+                        putExtra(Intent.EXTRA_EMAIL, myEmail)
+                        putExtra(Intent.EXTRA_SUBJECT, "Eloquence App Feedback")
+                        type = "*/*"
+                        setPackage("com.google.android.gm")
+                        putExtra(Intent.EXTRA_TEXT, bodyText)
+                    }
+
+                    try {
+                        startActivity(Intent.createChooser(intent, "Send Mail"))
+                    } catch (activityNotFoundException: ActivityNotFoundException) {
+                        Toast.makeText(this, R.string.no_app_found, Toast.LENGTH_SHORT).show()
+                    }
+                }
+            }
+            true
+        }
+
 
         binding.searchIcon.setOnClickListener {
             val intent = Intent(this, SearchActivity::class.java)
@@ -58,31 +119,21 @@ class MainActivity : AppCompatActivity(), WordItemListener {
             startActivity(intent, options.toBundle())
         }
 
-        val adapter = WordAdapter(this)
-        binding.wordItemRecycler.apply {
-            this.adapter = adapter
-            // itemAnimator for default animations in recyclerView.
 
+
+
+        binding.createFab.setOnClickListener {
+            val intent = Intent(this, CreateActivity::class.java)
+            startActivity(intent)
         }
 
         //handle the incoming intent
         handleIntent(intent)
-
-        //fill the recyclerView
-        lifecycle.coroutineScope.launch {
-            repeatOnLifecycle(Lifecycle.State.STARTED) {
-                mainViewModel.getAll().collect {
-                    adapter.submitList(it)
-                }
-            }
-        }
     }
 
 
     private fun handleIntent(intent: Intent?) {
         when (intent?.action) {
-            Intent.ACTION_VIEW -> Toast.makeText(this, "View", Toast.LENGTH_SHORT).show()
-            Intent.ACTION_MAIN -> Toast.makeText(this, "Main", Toast.LENGTH_SHORT).show()
             Intent.ACTION_CREATE_DOCUMENT -> handleWord(intent)
         }
     }
@@ -108,64 +159,14 @@ class MainActivity : AppCompatActivity(), WordItemListener {
         }
 
         //insert to RoomDatabase //Using WordEntity for predefined value of id.
-        mainViewModel.insert(WordEntity(word, sentence))
-    }
-
-    private fun deleteWord(view: View, id: Long) {
-
-        val wordItemRecyclerView = binding.wordItemRecycler
-
-        val position: Int? = wordItemRecyclerView.findContainingViewHolder(view)?.layoutPosition
-
-        binding.wordItemRecycler.apply {
-            this.itemAnimator = DefaultItemAnimator()
-
-        }
-
-        Log.d("recycler-pos", position.toString())
-        val adapter = WordAdapter(this)
-
-
-        //TODO show dialog box after delete.
-
-        //delete the word from database
-        mainViewModel.deleteWord(id)
-
-
-        //notify the adapter for the change.
-        if (position != null) {
-            adapter.notifyItemRemoved(position)
-        } else {
-            Toast.makeText(this, "Couldn't get the position of wordItem", Toast.LENGTH_SHORT).show()
-        }
+        mainViewModel.insert(Word(0L, word, sentence))
 
     }
 
-    private fun navigateToUpdate(id: Long) {
-        //Navigate to Update Activity with id as extra
-        val intent = Intent(this, UpdateActivity::class.java)
-            .putExtra("id", id)
-        startActivity(intent)
-    }
-
-    override fun openPopupMenu(view: View, id: Long): Boolean {
-
-        //popup Menu for items
-        val popupMenu = PopupMenu(this, view)
-        popupMenu.menuInflater.inflate(R.menu.popup_menu, popupMenu.menu)
-        popupMenu.show()
 
 
-        popupMenu.setOnMenuItemClickListener { menuItem ->
-            when (menuItem.itemId) {
-                R.id.update_item -> navigateToUpdate(id)
-                R.id.delete_item -> deleteWord(view, id)
-            }
-            return@setOnMenuItemClickListener true
-        }
 
-        return true
-    }
+
 
     companion object {
         private const val TAG = "MainActivity"

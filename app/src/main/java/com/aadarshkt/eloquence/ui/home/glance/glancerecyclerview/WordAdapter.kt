@@ -1,4 +1,4 @@
-package com.aadarshkt.eloquence.ui.home.homerecyclerview
+package com.aadarshkt.eloquence.ui.home.glance.glancerecyclerview
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -31,7 +31,7 @@ class WordAdapter(
     companion object WordDiffCallback : DiffUtil.ItemCallback<Word>() {
         //check if they are the same object
         override fun areItemsTheSame(oldItem: Word, newItem: Word): Boolean {
-            return oldItem === newItem
+            return oldItem.id == newItem.id
         }
 
         //check if the their contents the same through a particular property of the object.
