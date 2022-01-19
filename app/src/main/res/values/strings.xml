@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Eloquence</string>
     <string name="search">Search</string>
@@ -6,7 +7,6 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="save_button">save button</string>
-    <string name="save">Save</string>
     <string name="word">Word</string>
     <string name="sentence">Sentence</string>
     <string name="update">Update</string>
@@ -20,6 +20,32 @@
     <string name="how_to_use">How to use</string>
     <string name="eloquence">Eloquence</string>
     <string name="menu">menu</string>
+    <string name="create">Create</string>
+    <string name="save">Save</string>
+    <string name="meaning">Meaning</string>
+    <string name="glance">Glance</string>
+    <string name="glance_or_revise">Glance or Revise</string>
+    <string name="type_of_view">Type of View</string>
+    <string name="new_word">New Word</string>
+    <string name="flip_button">Flip Button</string>
+    <string name="left">Left</string>
+    <string name="right">Right</string>
+    <string name="revise">Revise</string>
+    <string name="click_the_card_to_see_the_next">Click the card to see the next</string>
+    <string name="click_the_card_nfor_meaning">Click the card\nFor Meaning</string>
+    <string name="click_on_the_card_to_show_meaning">Click on the card to show Meaning</string>
+    <string name="click_the_card_for_meaning">Click the card for Meaning</string>
+    <string name="contact_us">Contact Us</string>
+
+    <!-- Strings for activities -->
+    <string name="about_text">This app will help you to save words and their meanings. You can also revise them later</string>
+    <string name="how_to_use_heading">How to Revise through Cards</string>
+    <string name="how_to_use_text">1. Click the Revise tab in the bottom of the \t\t screen.\n\n2. Click the card to flip.\n\n3. Slide left to move to next.</string>
+    <string name="no_app_found">Gmail app was not found! Contact through play store</string>
+    <string name="how_to_revise_through_cards">How to Revise through Cards</string>
+    <string name="info_image">info_image</string>
+    <string name="about_top_app_bar">About</string>
+    <string name="instruction">Instruction</string>
 
     <!-- Custom queries for app actions -->
 

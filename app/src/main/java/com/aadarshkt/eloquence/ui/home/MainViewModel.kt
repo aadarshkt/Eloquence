@@ -7,33 +7,49 @@ import androidx.lifecycle.viewModelScope
 import com.aadarshkt.eloquence.datasource.WordEntity
 import com.aadarshkt.eloquence.datasource.WordRepository
 import com.aadarshkt.eloquence.models.Word
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
+
 
 class MainViewModel(private val repository: WordRepository) : ViewModel() {
 
+
     //get data from database using Flow and convert it from WordEntity data type to Word dataType
     //no need of suspend function.
-    fun getAll(): Flow<List<Word>> = repository.getAll().map { wordEntityList ->
-        wordEntityList.map {
-            it.toWord()
+
+    private val _allWords = MutableStateFlow<Flow<List<Word>>>(emptyFlow())
+    val allWords: StateFlow<Flow<List<Word>>> = _allWords
+
+    fun load() = effect {
+        _allWords.value = repository.getAll().map { wordEntityList ->
+            wordEntityList.map {
+                it.toWord()
+            }
         }
     }
 
+//    fun getAll() : Flow<List<Word>> =
+//        repository.getAll().map { wordEntityList ->
+//            wordEntityList.map {
+//                it.toWord()
+//            }
+//        }
+
+
     //update word
-    fun updateWord(word: Word) = viewModelScope.launch {
+    fun updateWord(word: Word) = effect {
         repository.updateWord(word.toWordEntity())
     }
 
     //delete Data
-    fun deleteWord(id: Long) = viewModelScope.launch {
+    fun deleteWord(id: Long) = effect {
         repository.delete(id)
     }
 
     //insert (create) data to the database
-    fun insert(word: WordEntity) = viewModelScope.launch {
-        repository.insert(word)
+    fun insert(word: Word) = effect {
+        repository.insert(word.toWordEntity())
     }
 
     //Read Data from the database.
@@ -58,14 +74,18 @@ class MainViewModel(private val repository: WordRepository) : ViewModel() {
     private fun Word.toWordEntity() = WordEntity(
         id = id,
         name = name,
-        sentence = sentence
+        meaning = meaning
     )
 
     private fun WordEntity.toWord() = Word(
         id = id,
         name = name,
-        sentence = sentence
+        meaning = meaning
     )
+
+    private fun effect(block: suspend () -> Unit) {
+        viewModelScope.launch(Dispatchers.IO) { block() }
+    }
 }
 
 

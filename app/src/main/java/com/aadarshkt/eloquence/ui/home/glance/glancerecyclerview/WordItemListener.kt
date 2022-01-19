@@ -1,4 +1,4 @@
-package com.aadarshkt.eloquence.ui.home.homerecyclerview
+package com.aadarshkt.eloquence.ui.home.glance.glancerecyclerview
 
 import android.view.View
 
