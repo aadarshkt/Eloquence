@@ -3,16 +3,12 @@ package com.aadarshkt.eloquence.ui.home.revise.reviserecyclerview
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.lifecycle.LiveData
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import com.aadarshkt.eloquence.databinding.ReviseItemBinding
 import com.aadarshkt.eloquence.models.Word
 
-class ReviseAdapter(
-    private val onFlipChange: () -> Unit,
-    private val isFlippedLiveData: LiveData<Boolean>,
-) : ListAdapter<Word, ReviseItemViewHolder>(WordDiffCallback) {
+class ReviseAdapter : ListAdapter<Word, ReviseItemViewHolder>(WordDiffCallback) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ReviseItemViewHolder {
 
@@ -28,17 +24,24 @@ class ReviseAdapter(
     override fun onBindViewHolder(holder: ReviseItemViewHolder, position: Int) {
         holder.bind(getItem(position))
 
-        val frontViewCard = holder.binding.cardFront.root
-        val backViewCard = holder.binding.cardBack.root
+        var frontViewCard = holder.binding.cardFront.root
+        var backViewCard = holder.binding.cardBack.root
+        val checkBack = frontViewCard
         val context = holder.itemView.context
 
         holder.itemView.setOnClickListener {
-            if(isFlippedLiveData.value == true) {
-                Toast.makeText(context, "Completed", Toast.LENGTH_SHORT).show()
-            } else {
-                onFlipChange
-                holder.flipCard(context, backViewCard, frontViewCard)
+            val temp = frontViewCard
+            frontViewCard = backViewCard
+            backViewCard = temp
+            holder.flipCard(context, frontViewCard, backViewCard)
+            if (checkBack == backViewCard) {
+                if (position == itemCount - 1) {
+                    Toast.makeText(context, "Completed", Toast.LENGTH_SHORT).show()
+                } else {
+                    Toast.makeText(context, "Completed Move to next!", Toast.LENGTH_SHORT).show()
+                }
             }
+
         }
 
     }

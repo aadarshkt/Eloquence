@@ -17,6 +17,10 @@ class HowToUseActivity : AppCompatActivity() {
         binding.howToUseHeading.text = getString(R.string.how_to_use_heading)
 
         binding.howToUseText.text = getString(R.string.how_to_use_text)
+
+        binding.backButtonHowToUse.setOnClickListener {
+            finish()
+        }
     }
 
 

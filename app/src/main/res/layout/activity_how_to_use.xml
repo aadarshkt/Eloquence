@@ -10,6 +10,51 @@
         android:layout_height="match_parent"
         tools:context=".ui.drawer.HowToUseActivity">
 
+        <com.google.android.material.appbar.AppBarLayout
+            android:id="@+id/top_app_bar_layout_about"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            app:elevation="0dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:id="@+id/back_button_how_to_use"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="8dp"
+                    android:contentDescription="@string/menu"
+                    android:padding="12dp"
+                    android:src="@drawable/ic_arrow_left"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/title_app"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="14dp"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/breeserif_regular"
+                    android:text="@string/instruction"
+                    android:textAlignment="center"
+                    android:textColor="@color/black"
+                    android:textSize="25sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </com.google.android.material.appbar.AppBarLayout>
+
+
         <TextView
             android:id="@+id/how_to_use_heading"
             style="@style/eloquence_font_style_medium"
@@ -24,13 +69,16 @@
 
         <TextView
             android:id="@+id/how_to_use_text"
-            style="@style/eloquence_font_style_medium"
+            style="@style/eloquence_font_paragraph_small"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:padding="30dp"
+            android:textAlignment="viewStart"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.32999998" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </layout>

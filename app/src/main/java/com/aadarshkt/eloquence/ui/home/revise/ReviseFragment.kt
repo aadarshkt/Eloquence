@@ -27,6 +27,7 @@ class ReviseFragment : Fragment(){
     }
 
     private val reviseViewModel: ReviseViewModel by viewModels()
+    private var isFlipped: Boolean? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -39,20 +40,23 @@ class ReviseFragment : Fragment(){
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-
-        val isFlippedLiveData = reviseViewModel.isFlipped
-
         //adapter instance
-        val adapter = ReviseAdapter(onFlipChange = {
-            reviseViewModel.onReviseCardClicked()
-        }, isFlippedLiveData)
+        reviseViewModel.isFlipped.observe(viewLifecycleOwner) { isFlippedLiveData ->
+            isFlipped = isFlippedLiveData
+        }
+
+        val adapter = ReviseAdapter()
         binding.reviseRecyclerview.adapter = adapter
 
-        //fill the recyclerView
+
+        mainViewModel.load()
+
         viewLifecycleOwner.lifecycleScope.launch {
-            viewLifecycleOwner.lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
-                mainViewModel.allWords.collect {
-                    adapter.submitList(it)
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                mainViewModel.allWords.collect { wordList ->
+                    wordList.collect {
+                        adapter.submitList(it)
+                    }
                 }
             }
         }

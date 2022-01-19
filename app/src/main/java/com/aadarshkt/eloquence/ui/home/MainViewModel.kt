@@ -7,6 +7,7 @@ import androidx.lifecycle.viewModelScope
 import com.aadarshkt.eloquence.datasource.WordEntity
 import com.aadarshkt.eloquence.datasource.WordRepository
 import com.aadarshkt.eloquence.models.Word
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 
@@ -17,13 +18,13 @@ class MainViewModel(private val repository: WordRepository) : ViewModel() {
     //get data from database using Flow and convert it from WordEntity data type to Word dataType
     //no need of suspend function.
 
-    private val _allWords: MutableStateFlow<List<Word>> = MutableStateFlow(emptyList())
-    val allWords: StateFlow<List<Word>> = _allWords
+    private val _allWords = MutableStateFlow<Flow<List<Word>>>(emptyFlow())
+    val allWords: StateFlow<Flow<List<Word>>> = _allWords
 
-    init {
-        viewModelScope.launch {
-            repository.getAll().collect { wordEntityList ->
-                _allWords.value = wordEntityList.map { wordEntity -> wordEntity.toWord() }
+    fun load() = effect {
+        _allWords.value = repository.getAll().map { wordEntityList ->
+            wordEntityList.map {
+                it.toWord()
             }
         }
     }
@@ -37,17 +38,17 @@ class MainViewModel(private val repository: WordRepository) : ViewModel() {
 
 
     //update word
-    fun updateWord(word: Word) = viewModelScope.launch {
+    fun updateWord(word: Word) = effect {
         repository.updateWord(word.toWordEntity())
     }
 
     //delete Data
-    fun deleteWord(id: Long) = viewModelScope.launch {
+    fun deleteWord(id: Long) = effect {
         repository.delete(id)
     }
 
     //insert (create) data to the database
-    fun insert(word: Word) = viewModelScope.launch {
+    fun insert(word: Word) = effect {
         repository.insert(word.toWordEntity())
     }
 
@@ -81,6 +82,10 @@ class MainViewModel(private val repository: WordRepository) : ViewModel() {
         name = name,
         meaning = meaning
     )
+
+    private fun effect(block: suspend () -> Unit) {
+        viewModelScope.launch(Dispatchers.IO) { block() }
+    }
 }
 
 

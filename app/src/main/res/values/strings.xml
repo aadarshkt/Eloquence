@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Eloquence</string>
     <string name="search">Search</string>
@@ -39,12 +40,12 @@
     <!-- Strings for activities -->
     <string name="about_text">This app will help you to save words and their meanings. You can also revise them later</string>
     <string name="how_to_use_heading">How to Revise through Cards</string>
-    <string name="how_to_use_text">1.Click the Revise tab in the bottom of the string.\n
-                                    2. Click the card to flip.\n
-                                    3. Slide left to move to next.</string>
+    <string name="how_to_use_text">1. Click the Revise tab in the bottom of the \t\t screen.\n\n2. Click the card to flip.\n\n3. Slide left to move to next.</string>
     <string name="no_app_found">Gmail app was not found! Contact through play store</string>
     <string name="how_to_revise_through_cards">How to Revise through Cards</string>
     <string name="info_image">info_image</string>
+    <string name="about_top_app_bar">About</string>
+    <string name="instruction">Instruction</string>
 
     <!-- Custom queries for app actions -->
 

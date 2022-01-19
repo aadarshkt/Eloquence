@@ -33,10 +33,6 @@ class UpdateActivity : AppCompatActivity() {
             handleIntent(intent)
         }
 
-        //Define lifecycleOwner for the liveData.
-        binding.lifecycleOwner = this
-
-
         mainViewModel.word.observe(this) {
             binding.wordNameEdit.setText(it.name)
             binding.meaningEdit.setText(it.meaning)
@@ -45,21 +41,24 @@ class UpdateActivity : AppCompatActivity() {
         }
 
         binding.updateButton.setOnClickListener {
-
-            val wordId = intent?.getLongExtra("id", -1) ?: -1
-            val updatedWord = Word(
-                wordId,
-                binding.wordNameEdit.text.toString(),
-                binding.meaningEdit.text.toString()
-            )
-            mainViewModel.updateWord(updatedWord)
-            Toast.makeText(this, "Word Updated", Toast.LENGTH_SHORT).show()
-            finish()
+            updateWord()
         }
 
         binding.backButton.setOnClickListener {
             finish()
         }
+    }
+
+    private fun updateWord() {
+        val wordId = intent?.getLongExtra("id", -1) ?: -1
+        val updatedWord = Word(
+            wordId,
+            binding.wordNameEdit.text.toString(),
+            binding.meaningEdit.text.toString()
+        )
+        mainViewModel.updateWord(updatedWord)
+        Toast.makeText(this, "Word Updated", Toast.LENGTH_SHORT).show()
+        finish()
     }
 
     override fun onResume() {
@@ -75,7 +74,7 @@ class UpdateActivity : AppCompatActivity() {
 
     private suspend fun handleIntent(intent: Intent?) {
         val wordId = intent?.getLongExtra("id", -1) ?: -1
-        if (!wordId.equals(-1)) {
+        if (wordId == -1L) {
             mainViewModel.loadWord(wordId)
         } else {
             Toast.makeText(this, "Could not load the word", Toast.LENGTH_SHORT).show()

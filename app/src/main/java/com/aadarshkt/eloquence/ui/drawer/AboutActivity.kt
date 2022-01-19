@@ -16,6 +16,10 @@ class AboutActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         binding.aboutText.text = getString(R.string.about_text)
+
+        binding.backButtonAbout.setOnClickListener {
+            finish()
+        }
     }
 
 

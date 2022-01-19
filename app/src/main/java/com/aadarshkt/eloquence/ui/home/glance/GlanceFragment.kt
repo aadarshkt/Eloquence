@@ -48,13 +48,14 @@ class GlanceFragment : Fragment(), WordItemListener {
         val adapter = WordAdapter(this)
         binding.wordItemRecycler.adapter = adapter
 
-        binding.lifecycleOwner = this
+        mainViewModel.load()
 
-        //fill the recyclerView
         viewLifecycleOwner.lifecycleScope.launch {
-            viewLifecycleOwner.lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
-                mainViewModel.allWords.collect {
-                    adapter.submitList(it)
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                mainViewModel.allWords.collect { wordList ->
+                    wordList.collect {
+                        adapter.submitList(it)
+                    }
                 }
             }
         }
@@ -72,6 +73,7 @@ class GlanceFragment : Fragment(), WordItemListener {
 
     override fun onResume() {
         super.onResume()
+        mainViewModel.load()
         Log.d(TAG, "RESUME")
     }
 
@@ -98,10 +100,9 @@ class GlanceFragment : Fragment(), WordItemListener {
         popupMenu?.menuInflater?.inflate(R.menu.popup_menu, popupMenu.menu)
         popupMenu?.show()
 
-
         popupMenu?.setOnMenuItemClickListener { menuItem ->
             when (menuItem.itemId) {
-                R.id.update_item -> navigateToUpdate(id)
+                R.id.update_item -> navigateToUpdate(id, view)
                 R.id.delete_item -> deleteWord(view, id)
             }
             return@setOnMenuItemClickListener true
@@ -110,10 +111,15 @@ class GlanceFragment : Fragment(), WordItemListener {
         return true
     }
 
-    private fun navigateToUpdate(id: Long) {
+    private fun navigateToUpdate(id: Long, view: View) {
         //Navigate to Update Activity with id as extra
+
+        val wordItemRecyclerView = binding.wordItemRecycler
+        val position: Int? = wordItemRecyclerView.findContainingViewHolder(view)?.layoutPosition
+
         val intent = Intent(context, UpdateActivity::class.java)
             .putExtra("id", id)
+            .putExtra("position", position)
 
         startActivity(intent)
     }

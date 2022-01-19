@@ -8,7 +8,7 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.widget.addTextChangedListener
+import androidx.core.widget.doAfterTextChanged
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
@@ -30,19 +30,6 @@ class SearchActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
-//        window.requestFeature(Window.FEATURE_ACTIVITY_TRANSITIONS)
-//        findViewById<View>(android.R.id.content).transitionName = "search_transition"
-//        setEnterSharedElementCallback(MaterialContainerTransformSharedElementCallback())
-//
-//        window.sharedElementEnterTransition = MaterialContainerTransform().apply {
-//            addTarget(android.R.id.content)
-//            duration = 300L
-//        }
-//        window.sharedElementReturnTransition = MaterialContainerTransform().apply {
-//            addTarget(android.R.id.content)
-//            duration = 250L
-//        }
-
         super.onCreate(savedInstanceState)
 
         binding = ActivitySearchBinding.inflate(layoutInflater)
@@ -56,7 +43,7 @@ class SearchActivity : AppCompatActivity() {
 
         //set editText with keyboard
         binding.searchEditText.apply {
-            this.addTextChangedListener { query ->
+            this.doAfterTextChanged { query ->
                 lifecycleScope.launch {
                     repeatOnLifecycle(Lifecycle.State.STARTED) {
                         mainViewModel.getSearchWord(query.toString())
